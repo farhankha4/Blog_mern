@@ -12,7 +12,11 @@ app.use(express.json())
 app.use(cors({credentials:true,origin:'http://localhost:5173'}));
 app.use(cookieParser());
 const salt = bcrypt.genSaltSync(10)
-mongoose.connect('mongodb+srv://blog:FHLAfajflajflafjfaf@cluster0.hc8k4ue.mongodb.net/')
+
+mongoose.connect("mongodb+srv://blog:FHLAfajflajflafjfaf@cluster0.hc8k4ue.mongodb.net/")
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
+
 
 
 app.post('/register',async (req,res)=>{
@@ -34,7 +38,10 @@ app.post("/login", async (req, res) => {
   if (passOk) {
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
-      res.cookie("token", token).json("ok");
+      res.cookie("token", token).json({
+        id:userDoc._id,
+        username,
+      });
     });
   } else {
     res.status(400).json("wrong credentials");
