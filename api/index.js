@@ -6,6 +6,9 @@ const User = require('./model/user')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
+const multer  = require('multer')
+const uploadMiddleware = multer({ dest: 'Uploads/' })
+const fs = require('fs')
 
 const secret = "asdfghjkqwertyuizxcvbnm";
 app.use(express.json())
@@ -61,6 +64,16 @@ app.post('/logout', (req, res) => {
     res.cookie('token','').json('ok');
 });
 
+app.post('/post',uploadMiddleware.single('file'),(req,res) => {
+  const {originalname,path} = req.file;
+  const paths = originalname.split('.');
+  const ext = paths[paths.length-1];
+  newPath = path +'.' +ext;
+  fs.renameSync(path , newPath)
+  
+  res.json(ext);
+
+})
     
     
 app.listen(4000);
