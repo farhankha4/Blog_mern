@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
 const multer  = require('multer')
-const uploadMiddleware = multer({ dest: 'Uploads/' })
+const uploadMiddleware = multer({ dest: '/tmp' })
 const fs = require('fs')
 
 const secret = process.env.JWT_SECRET;
