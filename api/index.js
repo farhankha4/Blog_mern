@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(cors({credentials:true,origin:process.env.FRONTEND_URL}));
 app.use(cookieParser());
 const salt = bcrypt.genSaltSync(10)
-app.use('/uploads',express.static(__dirname + '/uploads'));
+// app.use('/uploads',express.static(__dirname + '/uploads'));
 
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB connected"))
@@ -67,57 +67,55 @@ app.post('/logout', (req, res) => {
     res.cookie('token','').json('ok');
 });
 
-app.post('/post',uploadMiddleware.single('file'),async(req,res) => {
-  const {originalname,path} = req.file;
-  const paths = originalname.split('.');
-  const ext = paths[paths.length-1];
-  newPath = path +'.' +ext;
-  fs.renameSync(path , newPath)
-  const { token } = req.cookies;   
-  jwt.verify(token, secret, {},async(err, userData) => {
+app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
+  const { originalname, path } = req.file;
+  const ext = originalname.split(".").pop();
+  const newPath = `/tmp/${path.split("/").pop()}.${ext}`;
+  fs.renameSync(path, newPath);
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, async (err, userData) => {
     if (err) throw err;
-    const {title,summary,content} = req.body;
+    const { title, summary, content } = req.body;
     const PostDoc = await Post.create({
-    title,
-    summary,
-    content,
-    cover:newPath,
-    author:userData.id,
-  })
-    res.json(PostDoc);
+      title,
+      summary,
+      content,
+      cover: newPath,
+      author: userData.id,
     });
-})
+    res.json(PostDoc);
+  });
+});
 
-app.put('/post', uploadMiddleware.single('file'), async (req, res) => {
+app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   let newPath = null;
   if (req.file) {
     const { originalname, path } = req.file;
-    const parts = originalname.split('.');
-    const ext = parts[parts.length - 1];
-    newPath = path + '.' + ext;
-    fs.renameSync(path, newPath); 
+    const ext = originalname.split(".").pop();
+    newPath = `/tmp/${path.split("/").pop()}.${ext}`;
+    fs.renameSync(path, newPath);
   }
 
   const { token } = req.cookies;
-  
+
   jwt.verify(token, secret, {}, async (err, userData) => {
-    if (err) return res.status(401).json('Invalid token'); 
+    if (err) return res.status(401).json("Invalid token");
 
     const { id, title, summary, content } = req.body;
 
     if (!id) {
-        return res.status(400).json('Post ID is missing');
+      return res.status(400).json("Post ID is missing");
     }
     const PostDoc = await Post.findById(id);
 
     if (!PostDoc) {
-        return res.status(404).json('Post not found');
+      return res.status(404).json("Post not found");
     }
 
     const isAuthor = PostDoc.author.equals(userData.id);
-    
+
     if (!isAuthor) {
-      return res.status(403).json('You are not the author'); 
+      return res.status(403).json("You are not the author");
     }
     PostDoc.set({
       title,
@@ -125,7 +123,7 @@ app.put('/post', uploadMiddleware.single('file'), async (req, res) => {
       content,
       cover: newPath ? newPath : PostDoc.cover,
     });
-    
+
     await PostDoc.save();
 
     res.json(PostDoc);
