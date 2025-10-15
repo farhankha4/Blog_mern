@@ -13,10 +13,22 @@ const uploadMiddleware = multer({ dest: '/tmp' })
 const fs = require('fs')
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, 
-    credentials: true, 
+    // Use a function to check the origin against the allowed list
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g., Postman, server-to-server)
+        if (!origin) return callback(null, true); 
+        
+        // Check if the request origin is in the allowed list
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`Not allowed by CORS. Origin: ${origin}`), false);
+        }
+    },
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 };
+
 app.use(cors(corsOptions));
 const secret = process.env.JWT_SECRET;
 app.use(express.json())
