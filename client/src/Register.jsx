@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { PenLine } from "lucide-react";
@@ -10,7 +11,7 @@ export function Register() {
     async function reg(e){
         e.preventDefault();
         
-        const response = await fetch("http://localhost:4000/register", {
+        const response = await fetch(`${API_URL}/register`, {
             method:'post',
             body: JSON.stringify({ username, password }),
             headers: {'Content-Type':'application/json'}

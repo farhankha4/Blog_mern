@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { formatISO9075 } from "date-fns";
@@ -12,7 +13,7 @@ export function Postpage() {
     useEffect(() => {
         async function fetchPost() {
             try {
-                const response = await fetch(`http://localhost:4000/post/${id}`);
+                const response = await fetch(`${API_URL}/post/${id}`);
                 if (response.ok) {
                     const postInfo = await response.json();
                     setPostInfo(postInfo);
@@ -62,7 +63,7 @@ export function Postpage() {
             <div className="overflow-hidden rounded-xl shadow-xl mb-12">
                 <img
                     className="w-full h-full object-cover"
-                    src={`http://localhost:4000/${postInfo.cover}`}
+                    src={`${API_URL}/${postInfo.cover}`}
                     alt={postInfo.title}
                 />
             </div>

@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { formatISO9075 } from "date-fns";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,7 @@ export function Post({ _id, title, summary, cover, createdAt, author }) {
                     <Link to={`/post/${_id}`} className="block overflow-hidden rounded-lg">
                         <img 
                             className='w-full h-48 object-cover md:h-full transition-transform duration-500 hover:scale-105' 
-                            src={'http://localhost:4000/' + cover} 
+                            src={`${API_URL}/` + cover} 
                             alt={title} 
                         />
                     </Link>

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const app = express();
@@ -11,14 +12,14 @@ const multer  = require('multer')
 const uploadMiddleware = multer({ dest: 'Uploads/' })
 const fs = require('fs')
 
-const secret = "asdfghjkqwertyuizxcvbnm";
+const secret = process.env.JWT_SECRET;
 app.use(express.json())
-app.use(cors({credentials:true,origin:'http://localhost:5173'}));
+app.use(cors({credentials:true,origin:process.env.FRONTEND_URL}));
 app.use(cookieParser());
 const salt = bcrypt.genSaltSync(10)
 app.use('/uploads',express.static(__dirname + '/uploads'));
 
-mongoose.connect("mongodb+srv://blog:FHLAfajflajflafjfaf@cluster0.hc8k4ue.mongodb.net/")
+mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
@@ -145,4 +146,4 @@ app.get('/post/:id' , async(req,res) =>{
   res.json(postDoc)
 })
     
-app.listen(4000);
+app.listen(process.env.PORT || 4000);

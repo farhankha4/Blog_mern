@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { useState, useContext } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
@@ -11,7 +12,7 @@ export function Login() {
 
     async function log(e) {
         e.preventDefault();
-        const response = await fetch("http://localhost:4000/login", {
+        const response = await fetch(`${API_URL}/login`, {
             method: 'post',
             body: JSON.stringify({ username, password }),
             headers: { 'Content-Type': 'application/json' },

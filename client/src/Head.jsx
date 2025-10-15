@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { Link } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { UserContext } from './UserContext';
@@ -9,7 +10,7 @@ export function Head() {
     useEffect(() => {
         async function fetchProfile() {
             try {
-                const response = await fetch('http://localhost:4000/profile', {
+                const response = await fetch(`${API_URL}/profile`, {
                     credentials: 'include'
                 });
                 if (response.ok) {
@@ -26,7 +27,7 @@ export function Head() {
     }, [setUserInfo]);
 
     function logout() {
-        fetch('http://localhost:4000/logout', {
+        fetch(`${API_URL}/logout`, {
             credentials: 'include',
             method: 'POST'
         });
