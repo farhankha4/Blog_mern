@@ -11,11 +11,10 @@ const cookieParser = require('cookie-parser');
 const multer  = require('multer')
 const uploadMiddleware = multer({ dest: '/tmp' })
 const fs = require('fs')
-
+const CORS_ORIGIN = process.env.FRONTEND_URL;
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, 
-
-    credentials: true, 
+    origin: CORS_ORIGIN, // ONLY allow the frontend URL set in Vercel
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 };
 app.use(cors(corsOptions));
