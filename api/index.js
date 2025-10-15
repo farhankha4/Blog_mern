@@ -13,22 +13,11 @@ const uploadMiddleware = multer({ dest: '/tmp' })
 const fs = require('fs')
 
 const corsOptions = {
-    // Use a function to check the origin against the allowed list
-    origin: (origin, callback) => {
-        // Allow requests with no origin (e.g., Postman, server-to-server)
-        if (!origin) return callback(null, true); 
-        
-        // Check if the request origin is in the allowed list
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error(`Not allowed by CORS. Origin: ${origin}`), false);
-        }
-    },
-    credentials: true,
+    origin: process.env.FRONTEND_URL, 
+
+    credentials: true, 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 };
-
 app.use(cors(corsOptions));
 const secret = process.env.JWT_SECRET;
 app.use(express.json())
@@ -60,26 +49,12 @@ app.post('/register',async (req,res)=>{
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne({ username });
-
-  // Add check for userDoc existence before comparing password
-  if (!userDoc) {
-    return res.status(400).json("wrong credentials");
-  }
-  
   const passOk = bcrypt.compareSync(password, userDoc.password);
-  
   if (passOk) {
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
-      
-      // 🚨 FIX: Add cookie options for cross-site security 🚨
-      res.cookie("token", token, {
-        secure: true,        // Required since Vercel uses HTTPS
-        httpOnly: true,      // Prevents client-side JS access
-        sameSite: 'none',    // Essential for cross-site cookie sending (FE to BE)
-        maxAge: 1000 * 60 * 60 * 24 * 7 // Example: 7 days
-      }).json({
-        id: userDoc._id,
+      res.cookie("token", token).json({
+        id:userDoc._id,
         username,
       });
     });
@@ -88,18 +63,13 @@ app.post("/login", async (req, res) => {
   }
 });
 app.get('/profile', (req, res) => {
-    const { token } = req.cookies;   
-    
+    const { token } = req.cookies;   
     if (!token) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
-    
-    jwt.verify(token, secret, {}, (err, userData) => {
-      
-        if (err) {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-        res.json(userData);
+    return res.status(401).json({ message: 'No token provided' });
+  }
+    jwt.verify(token, secret, {},(err, userData) => {
+    if (err) throw err;
+    res.json(userData);
     });
 });
 app.post('/logout', (req, res) => {
