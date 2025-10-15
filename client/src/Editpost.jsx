@@ -49,7 +49,7 @@ export default function EditPost() {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen py-10 min-h-screen py-8 
+        <div className="bg-gray-50 min-h-screen py-8 
         bg-fixed bg-center bg-cover 
         bg-[url('https://i.pinimg.com/736x/ea/7c/1a/ea7c1a8e3e1a99a1c5397124c86d769c.jpg')]">
             <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">

@@ -29,7 +29,7 @@ export function Register() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 min-h-screen py-8 
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 py-8 
         bg-fixed bg-center bg-cover 
         bg-[url('https://i.pinimg.com/736x/ea/7c/1a/ea7c1a8e3e1a99a1c5397124c86d769c.jpg')] 
         ">
