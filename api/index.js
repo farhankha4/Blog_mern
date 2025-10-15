@@ -12,9 +12,16 @@ const multer  = require('multer')
 const uploadMiddleware = multer({ dest: '/tmp' })
 const fs = require('fs')
 
+const CORS_ORIGIN = process.env.FRONTEND_URL;
+
+const corsOptions = {
+    origin: CORS_ORIGIN, 
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+};
+app.use(cors(corsOptions));
 const secret = process.env.JWT_SECRET;
 app.use(express.json())
-app.use(cors({credentials:true,origin:process.env.FRONTEND_URL}));
 app.use(cookieParser());
 const salt = bcrypt.genSaltSync(10)
 // app.use('/uploads',express.static(__dirname + '/uploads'));
@@ -23,7 +30,7 @@ mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
-  
+
 app.get('/', (req, res) => {
   res.send('Backend is running!');
 });
