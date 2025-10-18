@@ -61,15 +61,13 @@ app.post("/login", async (req, res) => {
     res.status(400).json("wrong credentials");
   }
 });
-app.get('/profile', (req, res) => {
-    const { token } = req.cookies;   
-    if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
-    jwt.verify(token, secret, {},(err, userData) => {
+
+app.get('/profile', (req,res) => {
+  const {token} = req.cookies;
+  jwt.verify(token, secret, {}, (err,userData) => {
     if (err) throw err;
     res.json(userData);
-    });
+  });
 });
 app.post('/logout', (req, res) => {
     res.cookie('token','').json('ok');
