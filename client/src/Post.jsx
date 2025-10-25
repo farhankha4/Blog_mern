@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 export function Post({ _id, title, summary, cover, createdAt, author }) {
   return (
     <div
-      className="w-full max-w-4xl mx-auto my-6 p-4 md:p-6 
-bg-gray-800/70 rounded-xl 
-shadow-xl hover:shadow-2xl hover:shadow-indigo-500/50 
-transition-shadow duration-300 border border-indigo-400/50"
+      className="w-full max-w-4xl mx-auto my-6 p-4 md:p-6 bg-white rounded-xl 
+shadow-2xl hover:shadow-2xl hover:shadow-indigo-500/50 
+transition-shadow duration-300 border-2 border-indigo-200 hover:border-indigo-400"
     >
       <div className="flex flex-col md:flex-row gap-6 md:gap-8">
         <div className="md:w-5/12 flex-shrink-0">
