@@ -18,7 +18,7 @@ export function IndexPage(){
     <div className="
         min-h-screen py-8 
         bg-fixed bg-center bg-cover 
-        bg-[url('https://i.pinimg.com/736x/ea/7c/1a/ea7c1a8e3e1a99a1c5397124c86d769c.jpg')] 
+        bg-[url('https://i.pinimg.com/1200x/67/65/4e/67654e36b98c49da27328f0971979e88.jpg')] 
     ">
     {posts.length > 0 && posts.map(post =>(
         <Post key={post._id} {...post} />
