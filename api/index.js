@@ -41,6 +41,12 @@ app.get('/', (req, res) => {
   res.send('Backend is running!');
 });
 
+app.get('/post', async (req, res) => {
+  const posts = await Post.find().sort({ createdAt: -1 });
+  console.log(posts)
+  res.json(posts);
+});
+
 app.post('/register',async (req,res)=>{
     const {username,password}= req.body;
     try{
