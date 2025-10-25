@@ -63,7 +63,7 @@ export function Postpage() {
             <div className="overflow-hidden rounded-xl shadow-xl mb-12">
                 <img
                     className="w-full h-full object-cover"
-                    src={`${API_URL}/${postInfo.cover}`}
+                    src={postInfo.cover}
                     alt={postInfo.title}
                 />
             </div>
