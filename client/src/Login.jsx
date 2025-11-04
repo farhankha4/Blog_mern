@@ -3,6 +3,8 @@ import { useState, useContext } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { PenLine } from "lucide-react";
+import { IndexPage } from "./IndexPage";
+
 
 export function Login() {
   const [username, setUsername] = useState("");
@@ -30,7 +32,7 @@ export function Login() {
   }
 
   if (redirect) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/IndexPage"} />;
   }
 
   return (
