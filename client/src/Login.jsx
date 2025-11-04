@@ -32,7 +32,7 @@ export function Login() {
   }
 
   if (redirect) {
-    return <Navigate to={"/IndexPage"} />;
+    return <Navigate to={"/home"} />;
   }
 
   return (
