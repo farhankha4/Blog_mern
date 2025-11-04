@@ -25,7 +25,7 @@ export function IndexPage() {
             text-gray-900
             "
         >
-            <div className=" bg-white/50 min-h-screen py-8 px-4 sm:px-8">
+            <div className=" bg-white/60 min-h-screen py-8 px-4 sm:px-8">
                 {posts.length > 0 ? (
                     <div className="max-w-4xl mx-auto space-y-8">
                         {posts.map((post) => (
