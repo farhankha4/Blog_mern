@@ -8,14 +8,16 @@ import { UserContextProvider } from './UserContext'
 import Create from './Create'
 import { Postpage } from './Postpage'
 import Editpost from './Editpost'
-
+import LandingPage from './LandingPage'
 function App() {
   return (
     <>
       <UserContextProvider>
         <Routes>
+          
           <Route path="/" element={<Layout />}>
-            <Route index element={<IndexPage />} />
+            <Route index element={<LandingPage />} />
+            <Route path="/home" element={<IndexPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path = "/create" element = {<Create/>}/>
