@@ -68,7 +68,7 @@ export function Head() {
   return (
     <header className="flex items-center justify-between py-4 px-6 md:px-10 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 text-white sticky top-0 z-10 shadow-md backdrop-blur-md bg-opacity-90">
       <Link
-        to="/"
+        to="/home"
         className="inline-flex items-center gap-2 group hover:scale-[1.02] transition-transform duration-300"
       >
         <PenLine className="w-6 h-6 text-white group-hover:text-indigo-100 transition-colors" />
