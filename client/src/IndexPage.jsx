@@ -18,7 +18,8 @@ export function IndexPage() {
             className="
             min-h-screen 
             bg-fixed bg-center bg-cover 
-            bg-[url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80')]
+            bg-[url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80')]
+
 
             bg-no-repeat
             text-gray-900
