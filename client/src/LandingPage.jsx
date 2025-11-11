@@ -19,7 +19,7 @@ export default function LandingPage() {
 
         <button
           onClick={() => navigate("/Register")}
-          className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-600 hover:scale-105 transition-transform duration-300"
+          className="px-8 py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 text-white font-semibold rounded-full shadow-md hover:bg-blue-600 hover:scale-105 transition-transform duration-300"
         >
           Get Started
         </button>
