@@ -40,7 +40,7 @@ export default function Create(){
     }
     
     if(redirect){
-        return <Navigate to ={'/'} />
+        return <Navigate to ={'/home'} />
     }
 
     
@@ -54,7 +54,7 @@ export default function Create(){
             </h1>
             <form onSubmit={CreatePost} className="flex flex-col mx-auto max-w-4xl p-6 bg-white rounded-xl shadow-2xl border border-gray-100">
                 
-                {/* Title Input */}
+            
                 <input 
                     type="text" 
                     className='w-full block border-2 px-4 py-3 mb-4 text-xl border-gray-300 rounded-lg placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 transition focus:outline-none' 
@@ -63,7 +63,7 @@ export default function Create(){
                     onChange={(e)=>setTitle(e.target.value)}
                 />
                 
-                {/* Summary Input */}
+            
                 <input 
                     type="text" 
                     className='w-full block border-2 px-4 py-3 mb-4 text-lg border-gray-300 rounded-lg placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 transition focus:outline-none' 
@@ -72,7 +72,7 @@ export default function Create(){
                     placeholder="Summary: A brief description of the post" 
                 />
                 
-                {/* File Input (Cover Image) */}
+         
                 <label className="mb-4 block text-gray-700 font-medium">
                     Cover Image:
                     <input 
@@ -82,12 +82,12 @@ export default function Create(){
                     />
                 </label>
 
-                {/* Editor Component */}
+             
                 <div className="mb-8">
                     <Editor value={content} onChange={setContent} />
                 </div>
                 
-                {/* Submit Button */}
+      
                 <button 
                     type="submit"
                     className="w-full md:w-1/3 self-center py-3 px-6 text-xl font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 shadow-lg active:scale-[0.98]"

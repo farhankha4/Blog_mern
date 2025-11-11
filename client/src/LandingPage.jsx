@@ -12,7 +12,7 @@ export default function LandingPage() {
         <h1 className="text-5xl md:text-6xl font-extrabold text-gray-800 mb-4 leading-tight">
           Welcome to <span className="text-blue-500">InkEcho</span>
         </h1>
-        <p className="text-lg md:text-xl text-gray-600 mb-8">
+        <p className="text-lg md:text-xl text-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 mb-8">
           Your personal space to share stories, insights, and creativity with the world.
           Start writing today and make your voice heard.
         </p>
@@ -25,7 +25,6 @@ export default function LandingPage() {
         </button>
       </div>
 
-      {/* Hero Image */}
       <div className="mt-12">
         <img
           src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80"
@@ -34,13 +33,13 @@ export default function LandingPage() {
         />
       </div>
 
-      {/* Features Section */}
+
       <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
         {[
           {
             title: "Express Yourself",
             desc: "Share your thoughts freely and inspire others with your writing.",
-            img: "https://images.unsplash.com/photo-1504714146340-959ca07b7aad?auto=format&fit=crop&w=400&q=80",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVG-2eHpi-zhcyLL-9LkZiUGuO8cMCmxjdHw&s",
           },
           {
             title: "Build Your Audience",
@@ -66,7 +65,7 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* Footer */}
+
       <footer className="mt-20 mb-6 text-gray-500 text-sm">
         © {new Date().getFullYear()} InspireBlog. All rights reserved.
       </footer>

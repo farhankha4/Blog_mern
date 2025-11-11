@@ -37,14 +37,14 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ MongoDB connection
+
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
 app.get('/', (req, res) => res.send('Backend is running!'));
 
-// ---------------- REGISTER ----------------
+
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -54,12 +54,12 @@ app.post('/register', async (req, res) => {
     });
     res.json(UserDoc);
   } catch (e) {
-    // Return a 400 for client-side errors like duplicate username
+    
     res.status(400).json(e);
   }
 });
 
-// ---------------- LOGIN ----------------
+
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -89,7 +89,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ---------------- PROFILE ----------------
+
 app.get('/profile', (req, res) => {
   const { token } = req.cookies;
   if (!token) return res.status(401).json({ message: 'No token provided' });
@@ -100,23 +100,21 @@ app.get('/profile', (req, res) => {
   });
 });
 
-// ---------------- LOGOUT ----------------
 app.post('/logout', (req, res) => {
   res.cookie('token', '', {
     secure: true,
     httpOnly: true,
     sameSite: 'none',
-    maxAge: 0 // Expire the cookie immediately
+    maxAge: 0 
   }).json('ok');
 });
 
-// ---------------- CREATE POST ----------------
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   try {
     let coverUrl = null;
 
     if (req.file) {
-      // 1. Upload to Cloudinary
+    
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "blog_posts",
         use_filename: true,
@@ -125,14 +123,14 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
       coverUrl = result.secure_url;
       console.log("✅ Uploaded to Cloudinary:", coverUrl);
       
-      // 2. Clean up temporary file
+
       fs.unlinkSync(req.file.path);
     }
 
     const { token } = req.cookies;
     if (!token) return res.status(401).json("No token");
 
-    // 3. Verify token and create post
+
     jwt.verify(token, secret, {}, async (err, userData) => {
       if (err) return res.status(401).json("Invalid token");
 
@@ -141,7 +139,7 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
         title,
         summary,
         content,
-        cover: coverUrl, // This is the public URL your frontend needs
+        cover: coverUrl,
         author: userData.id
       });
 
@@ -150,18 +148,17 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
     });
   } catch (err) {
     console.error("❌ CREATE POST failed:", err);
-    // Crucial: Respond with JSON on error
+
     res.status(500).json({ message: "Post creation failed due to a server error." }); 
   }
 });
 
-// ---------------- UPDATE POST ----------------
 app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   try {
     let coverUrl = null;
 
     if (req.file) {
-      // 1. Upload new image
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "blog_posts",
         use_filename: true,
@@ -174,7 +171,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
     const { token } = req.cookies;
     if (!token) return res.status(401).json("No token");
 
-    // 2. Verify token and update post
+
     jwt.verify(token, secret, {}, async (err, userData) => {
       if (err) return res.status(401).json("Invalid token");
 
@@ -184,7 +181,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
       const PostDoc = await Post.findById(id);
       if (!PostDoc) return res.status(404).json("Post not found");
 
-      // Check if the user is the author
+
       const isAuthor = PostDoc.author.equals(userData.id);
       if (!isAuthor) return res.status(403).json("You are not the author");
 
@@ -192,7 +189,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
         title,
         summary,
         content,
-        // Use the new URL if available, otherwise keep the old one
+
         cover: coverUrl ? coverUrl : PostDoc.cover 
       });
 
@@ -205,7 +202,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   }
 });
 
-// ---------------- GET POSTS (FIXED) ----------------
+
 app.get('/post', async (req, res) => {
   try {
     const posts = await Post.find()
@@ -214,13 +211,13 @@ app.get('/post', async (req, res) => {
       .limit(20);
     res.json(posts);
   } catch (err) {
-    // 💥 THIS IS THE CRUCIAL FIX: Handle Mongoose/DB error and return JSON.
+
     console.error("❌ Error fetching posts:", err);
     res.status(500).json({ message: "Failed to fetch posts from the database." });
   }
 });
 
-// ---------------- GET SINGLE POST (FIXED) ----------------
+
 app.get('/post/:id', async (req, res) => {
   try {
     const { id } = req.params;
