@@ -10,7 +10,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="max-w-3xl">
         <h1 className="text-5xl md:text-6xl font-extrabold text-gray-800 mb-4 leading-tight">
-          Welcome to <span className="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 bg-clip-text text-transparent">InkEcho</span>
+          Welcome to <span className="font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-400 bg-clip-text text-transparent">InkEcho</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-600 mb-8">
           Your personal space to share stories, insights, and creativity with the world.
