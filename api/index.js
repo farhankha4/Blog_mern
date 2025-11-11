@@ -1,4 +1,5 @@
 require('dotenv').config();
+import connectDB from "./config/db.js";
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,7 +10,9 @@ const multer = require('multer');
 const fs = require('fs');
 const { v2: cloudinary } = require('cloudinary');
 
-// NOTE: You must ensure 'user' and 'post' models are correctly defined in './model/user' and './model/post'
+await connectDB(); 
+
+
 const User = require('./model/user');
 const Post = require('./model/post');
 
@@ -38,9 +41,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
+// mongoose.connect(process.env.MONGO_URL)
+//   .then(() => console.log("✅ MongoDB connected"))
+//   .catch(err => console.error("❌ MongoDB connection error:", err));
 
 app.get('/', (req, res) => res.send('Backend is running!'));
 
