@@ -27,14 +27,14 @@ export function Head() {
       {username ? (
         <>
           <span className="text-indigo-100 text-sm md:text-base font-medium">
-            👋 Hi, <span className="font-semibold">{username}</span>
+            Hi, <span className="font-semibold">{username}</span>
           </span>
 
           <Link
             to="/create"
             className={`${buttonClasses} border-indigo-200 text-indigo-200 hover:bg-indigo-700 hover:text-white`}
           >
-            + New Post
+            New Post
           </Link>
 
           <button
