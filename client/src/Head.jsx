@@ -23,11 +23,11 @@ export function Head() {
   const navContent = isLoading ? (
     <div className="w-24 h-5 bg-indigo-400 rounded animate-pulse"></div>
   ) : (
-    <div className="flex items-center space-x-5 font-medium">
+    <div className="flex items-center space-x-3 font-medium">
       {username ? (
         <>
           <span className="text-indigo-100 text-sm md:text-base font-medium">
-            Hi, <span className="font-semibold">{username}</span>
+            Hi,<span className="font-semibold">{username}</span>
           </span>
 
           <Link
