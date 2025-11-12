@@ -1,5 +1,5 @@
 require('dotenv').config();
-import connectDB from "./config/db.js";
+const connectDB = require("./config/db.js").default || require("./config/db.js");
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,7 +10,7 @@ const multer = require('multer');
 const fs = require('fs');
 const { v2: cloudinary } = require('cloudinary');
 
-await connectDB(); 
+
 
 
 const User = require('./model/user');
@@ -233,6 +233,18 @@ app.get('/post/:id', async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 4000, () => {
-  console.log("🚀 Server running on port", process.env.PORT || 4000);
-});
+connectDB()
+  .then(() => {
+    console.log("MongoDB connected successfully");
+    app.listen(process.env.PORT || 4000, () => {
+      console.log("Server running on port", process.env.PORT || 4000);
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB connection failed:", err);
+    process.exit(1);
+  });
+
+// app.listen(process.env.PORT || 4000, () => {
+//   console.log("🚀 Server running on port", process.env.PORT || 4000);
+// });
