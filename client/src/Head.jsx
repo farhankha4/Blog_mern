@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
@@ -33,7 +32,7 @@ export function Head() {
 
           <Link
             to="/create"
-            className={`${buttonClasses} border-indigo-200 text-indigo-200 hover:bg-indigo-700 hover:text-white hidden sm:inline`}
+            className={`${buttonClasses} border-indigo-200 text-indigo-200 hover:bg-indigo-700 hover:text-white`}
           >
             + New Post
           </Link>
@@ -72,9 +71,7 @@ export function Head() {
         className="inline-flex items-center gap-2 group hover:scale-[1.02] transition-transform duration-300"
       >
         <PenLine className="w-6 h-6 text-white group-hover:text-indigo-100 transition-colors" />
-        <span className="text-2xl font-extrabold tracking-tight">
-          InkEcho
-        </span>
+        <span className="text-2xl font-extrabold tracking-tight">InkEcho</span>
       </Link>
 
       {navContent}
