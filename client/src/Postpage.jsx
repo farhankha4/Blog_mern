@@ -36,7 +36,8 @@ export function Postpage() {
 
     return (
         <div
-            className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 
+            className="min-h-screen bg-fixed bg-center bg-cover 
+        bg-[url('https://i.pinimg.com/736x/ea/7c/1a/ea7c1a8e3e1a99a1c5397124c86d769c.jpg')]
             py-12 px-4 md:px-0 bg-fixed bg-cover bg-center"
         >
             <div className="max-w-4xl mx-auto bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100">
